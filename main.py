@@ -20,14 +20,20 @@ from models.evaluate import evaluate_model, validate_predictions
 def setup_logging(config):
     """
     Configura el sistema de logging.
-    
+
     Esto es como configurar tu test runner para que genere logs detallados.
     """
+    # Crear la carpeta de logs si no existe
+    # Esto es importante para CI/CD donde empezamos con un ambiente limpio
+    log_file = config['logging']['log_file']
+    log_dir = Path(log_file).parent  # Obtiene el directorio del archivo de log
+    log_dir.mkdir(parents=True, exist_ok=True)  # Crea el directorio si no existe
+
     logging.basicConfig(
         level=config['logging']['level'],
         format=config['logging']['format'],
         handlers=[
-            logging.FileHandler(config['logging']['log_file']),
+            logging.FileHandler(log_file),
             logging.StreamHandler()  # También imprime en consola
         ]
     )
