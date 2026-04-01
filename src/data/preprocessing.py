@@ -83,9 +83,16 @@ class DataPreprocessor:
         
         logger.info("✓ Transformaciones aplicadas")
         return X_scaled, y_encoded
-    
+
     def save(self, path):
         """Guarda el preprocessor para usarlo después en producción"""
+        from pathlib import Path
+
+        # Crear el directorio si no existe
+        # Esto es crítico para CI/CD donde empezamos con un ambiente limpio
+        model_path = Path(path)
+        model_path.parent.mkdir(parents=True, exist_ok=True)
+
         joblib.dump(self, path)
         logger.info(f"✓ Preprocessor guardado en: {path}")
     

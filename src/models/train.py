@@ -63,9 +63,15 @@ def train_model(X_train, y_train, config):
     # Entrenar
     model.fit(X_train, y_train)
     logger.info("✓ Modelo entrenado exitosamente")
-    
+
     # Guardar modelo
+    from pathlib import Path
+
     model_path = config['model']['model_path']
+
+    # Crear el directorio si no existe
+    Path(model_path).parent.mkdir(parents=True, exist_ok=True)
+
     joblib.dump(model, model_path)
     logger.info(f"✓ Modelo guardado en: {model_path}")
     
