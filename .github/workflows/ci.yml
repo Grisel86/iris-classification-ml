@@ -2,9 +2,9 @@ name: CI Pipeline
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [ main, develop, 'claude/**', 'feature/**' ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, develop ]
 
 jobs:
   test:
@@ -31,3 +31,7 @@ jobs:
     - name: Run full pipeline
       run: |
         python main.py
+
+    - name: Run predictions with trained model
+      run: |
+        python predict.py
