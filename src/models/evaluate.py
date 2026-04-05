@@ -10,25 +10,27 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-def evaluate_model(model, X_test, y_test, config):
+def evaluate_model(model, X_test, y_test, config, y_pred=None):
     """
     Evalúa el modelo y genera métricas de performance.
-    
+
     Esto es como tu test report en QA: te dice qué tan bien está funcionando.
-    
+
     Args:
         model: Modelo entrenado
         X_test: Features de test
         y_test: Labels reales de test
         config: Configuración con métricas y umbrales
-        
+        y_pred: Predicciones ya calculadas (opcional, evita recomputar)
+
     Returns:
         dict con todas las métricas calculadas
     """
     logger.info("Evaluando modelo...")
-    
-    # Hacer predicciones
-    y_pred = model.predict(X_test)
+
+    # Usar predicciones ya computadas o calcularlas si no se proveen
+    if y_pred is None:
+        y_pred = model.predict(X_test)
     
     # Calcular métricas
     metrics = {

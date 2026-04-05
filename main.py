@@ -95,8 +95,8 @@ def main():
         logger.error("Validación de predicciones FALLÓ")
         return 1
     
-    # Calcular métricas
-    metrics = evaluate_model(model, X_test, y_test, config)
+    # Calcular métricas (reutiliza y_pred ya computado)
+    metrics = evaluate_model(model, X_test, y_test, config, y_pred=y_pred)
     
     # Resultado final
     print("\n" + "="*60)
